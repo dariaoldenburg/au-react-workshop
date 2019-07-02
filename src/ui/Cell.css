@@ -1,0 +1,6 @@
+.Cell {
+  background-color: #7fafdf;
+}
+.Cell + .Cell {
+  margin-left: 5px;
+}
