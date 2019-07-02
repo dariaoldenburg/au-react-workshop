@@ -10,10 +10,23 @@ export function Chat() {
   return (
     <div className="Chat">
       <Row>
-        <Cell widthPercentage={70}>
+        <Cell header widthPercentage={70}>
           <strong>{channelName}</strong>
         </Cell>
-        <Cell widthPercentage={30}>{onlineUsersTitle}</Cell>
+        <Cell header widthPercentage={30} textAlign="center">
+          {onlineUsersTitle}
+        </Cell>
+      </Row>
+
+      <Row>
+        <Cell widthPercentage={70}>here be chat</Cell>
+        <Cell widthPercentage={30}>here be online users list</Cell>
+      </Row>
+
+      <Row>
+        <Cell header widthPercentage={70}>
+          here be textarea
+        </Cell>
       </Row>
     </div>
   );

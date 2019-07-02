@@ -1,5 +1,19 @@
 .Cell {
+}
+.Cell--padded {
+  padding: 5px;
+}
+.Cell--header {
   background-color: #7fafdf;
+}
+.Cell--textAlign-left {
+  text-align: left;
+}
+.Cell--textAlign-center {
+  text-align: center;
+}
+.Cell--textAlign-right {
+  text-align: right;
 }
 .Cell + .Cell {
   margin-left: 5px;
