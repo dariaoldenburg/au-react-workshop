@@ -1,6 +1,13 @@
 import React from 'react';
 import { Subscription } from 'rxjs';
-import { fetchMessages, Message, User, login, logout } from './ChatAPI';
+import {
+  fetchMessages,
+  fetchOnlineUsers,
+  login,
+  logout,
+  Message,
+  User
+} from './ChatAPI';
 import { MessagesList } from './MessagesList';
 import { Button } from './ui/Button';
 import { Cell } from './ui/Cell';
@@ -17,16 +24,10 @@ interface ChatState {
 }
 
 export class Chat extends React.PureComponent<{}, ChatState> {
-  state = {
-    channelName: 'Sieradz - Nasze Radio',
+  state: ChatState = {
+    channelName: 'AppUnite: #obiady',
     currentUser: null,
-    onlineUsers: [
-      { id: 1, name: 'geron' },
-      { id: 2, name: 'hit_fm', color: 'pink', senior: true },
-      { id: 3, name: 'kasienka2' },
-      { id: 4, name: 'Lady_Ann_' },
-      { id: 5, name: 'MalWINKaaa', color: 'orange', senior: true }
-    ],
+    onlineUsers: [],
     onlineUsersLoading: true,
     messages: [],
     messagesLoading: true
@@ -35,6 +36,15 @@ export class Chat extends React.PureComponent<{}, ChatState> {
   private _subscriptions: Subscription[] = [];
 
   componentDidMount() {
+    this._subscriptions.push(
+      fetchOnlineUsers().subscribe(users => {
+        this.setState({
+          onlineUsers: users,
+          onlineUsersLoading: false
+        });
+      })
+    );
+
     this._subscriptions.push(
       fetchMessages().subscribe(messages => {
         this.setState({
