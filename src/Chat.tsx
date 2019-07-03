@@ -5,6 +5,7 @@ import { MessagesList } from './MessagesList';
 import { Button } from './ui/Button';
 import { Cell } from './ui/Cell';
 import { Row } from './ui/Row';
+import { UsersList } from './UsersList';
 
 interface ChatState {
   channelName: string;
@@ -19,7 +20,13 @@ export class Chat extends React.PureComponent<{}, ChatState> {
   state = {
     channelName: 'Sieradz - Nasze Radio',
     currentUser: null,
-    onlineUsers: [],
+    onlineUsers: [
+      { id: 1, name: 'geron' },
+      { id: 2, name: 'hit_fm', color: 'pink', senior: true },
+      { id: 3, name: 'kasienka2' },
+      { id: 4, name: 'Lady_Ann_' },
+      { id: 5, name: 'MalWINKaaa', color: 'orange', senior: true }
+    ],
     onlineUsersLoading: true,
     messages: [],
     messagesLoading: true
@@ -89,7 +96,9 @@ export class Chat extends React.PureComponent<{}, ChatState> {
               <MessagesList messages={messages} />
             )}
           </Cell>
-          <Cell widthPercentage={30}>here be online users list</Cell>
+          <Cell widthPercentage={30}>
+            <UsersList users={onlineUsers} />
+          </Cell>
         </Row>
 
         <Row>
