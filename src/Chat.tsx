@@ -1,11 +1,19 @@
 import React from 'react';
-import { Row } from './ui/Row';
 import { Cell } from './ui/Cell';
+import { Row } from './ui/Row';
+import { User, UsersList } from './UsersList';
 
 export function Chat() {
   const channelName = 'Sieradz - Nasze Radio';
   const onlineUsersCount = 69;
   const onlineUsersTitle = `Obecni: [${onlineUsersCount}]`;
+  const onlineUsers: User[] = [
+    { name: 'geron' },
+    { name: 'hit_fm', color: 'pink', senior: true },
+    { name: 'kasienka2' },
+    { name: 'Lady_Ann_' },
+    { name: 'MalWINKaaa', color: 'orange', senior: true }
+  ];
 
   return (
     <div className="Chat">
@@ -19,8 +27,12 @@ export function Chat() {
       </Row>
 
       <Row>
-        <Cell widthPercentage={70}>here be chat</Cell>
-        <Cell widthPercentage={30}>here be online users list</Cell>
+        <Cell widthPercentage={70} scrollable height={300}>
+          here be chat
+        </Cell>
+        <Cell widthPercentage={30} scrollable height={300}>
+          <UsersList users={onlineUsers} />
+        </Cell>
       </Row>
 
       <Row>
