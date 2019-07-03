@@ -1,9 +1,9 @@
 import React from 'react';
 import { Subscription } from 'rxjs';
 import { Cell } from './ui/Cell';
-import { fetchOnlineUsers } from './ui/ChatAPI';
+import { fetchOnlineUsers, User } from './ui/ChatAPI';
 import { Row } from './ui/Row';
-import { User, UsersList } from './UsersList';
+import { UsersList } from './UsersList';
 
 interface ChatState {
   channelName: string;

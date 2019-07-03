@@ -1,12 +1,6 @@
 import React from 'react';
+import { User } from './ui/ChatAPI';
 import './UsersList.css';
-
-export interface User {
-  id?: string;
-  name: string;
-  color?: string;
-  senior?: boolean;
-}
 
 interface UsersListProps {
   users: User[];
