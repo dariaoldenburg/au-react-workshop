@@ -18,7 +18,7 @@ npm test
 
 ## Lessons
 
-Let's do a PolChat!
+Let's do a [PolChat](http://applet.polfan.pl/)!
 
 ![PolChat screenshot](http://iceq.ikari.pl/images/old_applet.jpg)
 
