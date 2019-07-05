@@ -18,7 +18,8 @@
 }
 
 .Button--variant--primary[disabled] {
-  background-color: gray;
+  background-color: #eae1e1;
+  color: #545252;
 }
 
 .Button--variant--secondary {
@@ -31,8 +32,8 @@
 }
 
 .Button--variant--secondary[disabled] {
-  background-color: #d6d2d2;
-  color: #000;
+  background-color: #eae1e1;
+  color: #545252;
 }
 
 .Button[disabled] {
