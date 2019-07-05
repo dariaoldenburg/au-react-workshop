@@ -38,3 +38,7 @@
 .Button[disabled] {
   cursor: not-allowed;
 }
+
+.Button--fullWidth {
+  width: 100%;
+}
