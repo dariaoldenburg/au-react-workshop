@@ -1,6 +1,7 @@
 import React from 'react';
 import { Subscription } from 'rxjs';
 import {
+  createMessage,
   fetchMessages,
   fetchOnlineUsers,
   login,
@@ -8,6 +9,7 @@ import {
   Message,
   User
 } from './ChatAPI';
+import { MessageBox } from './MessageBox';
 import { MessagesList } from './MessagesList';
 import { Button } from './ui/Button';
 import { Cell } from './ui/Cell';
@@ -21,6 +23,7 @@ interface ChatState {
   onlineUsersLoading: boolean;
   messages: Message[];
   messagesLoading: boolean;
+  currentMessage: string;
 }
 
 export class Chat extends React.PureComponent<{}, ChatState> {
@@ -30,7 +33,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     onlineUsers: [],
     onlineUsersLoading: true,
     messages: [],
-    messagesLoading: true
+    messagesLoading: true,
+    currentMessage: ''
   };
 
   private _subscriptions: Subscription[] = [];
@@ -60,6 +64,23 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     this._subscriptions.length = 0;
   }
 
+  handleSendMessage = () => {
+    const { currentMessage } = this.state;
+
+    createMessage({
+      content: currentMessage
+    });
+    this.setState({
+      currentMessage: ''
+    });
+  };
+
+  handleTextAreaOnChange = (value: string) => {
+    this.setState({
+      currentMessage: value
+    });
+  };
+
   handleSignIn = () => {
     const name = prompt('Twój nick: ', 'gość777');
     const color = prompt('Kolor: ', 'red') || undefined;
@@ -84,7 +105,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
       onlineUsersLoading,
       messages,
       messagesLoading,
-      currentUser
+      currentUser,
+      currentMessage
     } = this.state;
 
     return (
@@ -113,7 +135,11 @@ export class Chat extends React.PureComponent<{}, ChatState> {
 
         <Row>
           <Cell header widthPercentage={70}>
-            here be textarea
+            <MessageBox
+              onChange={this.handleTextAreaOnChange}
+              onSubmit={this.handleSendMessage}
+              message={currentMessage}
+            />
           </Cell>
           <Cell widthPercentage={30}>
             {currentUser ? (
