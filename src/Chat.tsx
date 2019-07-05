@@ -139,6 +139,7 @@ export class Chat extends React.PureComponent<{}, ChatState> {
               onChange={this.handleTextAreaOnChange}
               onSubmit={this.handleSendMessage}
               message={currentMessage}
+              disabled={!currentUser}
             />
           </Cell>
           <Cell widthPercentage={30}>
