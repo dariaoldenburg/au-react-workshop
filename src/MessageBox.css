@@ -1,0 +1,19 @@
+.MessageBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.MessageBox__textarea {
+  resize: none;
+  margin-bottom: 10px;
+  padding: 6px;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000;
+  border: 1px solid #e6e6e6;
+  border-radius: 2px;
+}
+
+.MessageBox__textarea[disabled] {
+  cursor: not-allowed;
+}
