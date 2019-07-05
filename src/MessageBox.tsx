@@ -6,6 +6,7 @@ export interface MessageBox {
   message: string;
   onChange: (value: string) => void;
   onSubmit: () => void;
+  disabled?: boolean;
 }
 
 function handleChange(
@@ -28,7 +29,7 @@ function handleSubmit(
 }
 
 export function MessageBox(props: MessageBox) {
-  const { onChange, onSubmit, message } = props;
+  const { onChange, onSubmit, message, disabled } = props;
 
   return (
     <form
@@ -39,8 +40,11 @@ export function MessageBox(props: MessageBox) {
         value={message}
         onChange={event => handleChange(event, onChange)}
         className="MessageBox__textarea"
+        disabled={disabled}
       />
-      <Button type="submit">Wyślij</Button>
+      <Button type="submit" disabled={disabled}>
+        Wyślij
+      </Button>
     </form>
   );
 }
