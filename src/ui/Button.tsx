@@ -8,15 +8,17 @@ interface ButtonProps {
   disabled?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
+  fullWidth?: boolean;
 }
 
 export function Button(props: ButtonProps) {
-  const { children, onClick, variant, disabled, type } = props;
+  const { children, onClick, variant, disabled, type, fullWidth } = props;
 
   return (
     <button
       className={classNames('Button', {
-        [`Button--variant--${variant}`]: true
+        [`Button--variant--${variant}`]: true,
+        [`Button--fullWidth`]: fullWidth
       })}
       onClick={onClick}
       disabled={disabled}
