@@ -10,6 +10,8 @@ export interface Message {
   id: number;
   createdAt: string;
   content: string;
+  name: string;
+  color?: string;
 }
 
 let uuid = 1;
@@ -24,7 +26,9 @@ function _addMessage(message: { content: string }) {
     {
       id: ++uuid,
       content: message.content,
-      createdAt: new Date().toString()
+      createdAt: new Date().toString(),
+      name: currentUser!.name,
+      color: currentUser!.color
     }
   ]);
 }
@@ -44,8 +48,6 @@ function _init() {
     _addUser({ id: ++uuid, name: 'kasienka2' });
     _addUser({ id: ++uuid, name: 'Lady_Ann_' });
     _addUser({ id: ++uuid, name: 'MalWINKaaa', color: 'orange', senior: true });
-
-    login({ name: '~sylwusia', color: 'red' });
   }, 1000);
 }
 
@@ -73,7 +75,7 @@ export function login(user: {
   color?: string;
   senior?: boolean;
 }) {
-  return new Promise((resolve, reject) => {
+  return new Promise<User>((resolve, reject) => {
     setTimeout(() => {
       currentUser = { id: ++uuid, ...user };
 
@@ -82,7 +84,7 @@ export function login(user: {
         content: `** przychodzi ${currentUser.name}...`
       });
 
-      resolve();
+      resolve(currentUser);
     }, 500);
   });
 }

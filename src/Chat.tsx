@@ -6,15 +6,19 @@ import {
   User,
   fetchMessages,
   Message,
-  createMessage
+  createMessage,
+  login,
+  logout
 } from './ui/ChatAPI';
 import { Row } from './ui/Row';
 import { UsersList } from './UsersList';
 import { MessagesList } from './MessagesList';
 import { MessageBox } from './MessageBox';
+import { Button } from './ui/Button';
 
 interface ChatState {
   channelName: string;
+  currentUser: User | null;
   onlineUsers: User[];
   onlineUsersLoading: boolean;
   messages: Message[];
@@ -25,6 +29,7 @@ interface ChatState {
 export class Chat extends React.PureComponent<{}, ChatState> {
   state = {
     channelName: 'Sieradz - Nasze Radio',
+    currentUser: null,
     onlineUsers: [],
     onlineUsersLoading: true,
     messages: [],
@@ -70,6 +75,23 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     });
   };
 
+  handleSignIn = () => {
+    const name = prompt('Twoje nick: ');
+    const color = prompt('Kolor: ', '') || undefined;
+
+    if (name) {
+      return login({ name, color }).then(currentUser => {
+        this.setState({ currentUser });
+      });
+    }
+    alert('Podaj nick!');
+  };
+
+  handleSignOut = () => {
+    logout();
+    this.setState({ currentUser: null });
+  };
+
   render() {
     const {
       channelName,
@@ -77,7 +99,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
       onlineUsersLoading,
       messages,
       messagesLoading,
-      currentMessage
+      currentMessage,
+      currentUser
     } = this.state;
 
     return (
@@ -111,6 +134,21 @@ export class Chat extends React.PureComponent<{}, ChatState> {
               onSubmit={this.handleSendMessage}
               message={currentMessage}
             />
+          </Cell>
+          <Cell widthPercentage={30}>
+            {currentUser ? (
+              <Button
+                onClick={this.handleSignOut}
+                variant="secondary"
+                fullWidth
+              >
+                Wyloguj się
+              </Button>
+            ) : (
+              <Button onClick={this.handleSignIn} variant="secondary" fullWidth>
+                Zaloguj się
+              </Button>
+            )}
           </Cell>
         </Row>
       </div>
