@@ -9,7 +9,7 @@ import {
   createMessage,
   login,
   logout
-} from './ui/ChatAPI';
+} from './ChatAPI';
 import { Row } from './ui/Row';
 import { UsersList } from './UsersList';
 import { MessagesList } from './MessagesList';

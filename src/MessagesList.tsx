@@ -1,6 +1,6 @@
 import React from 'react';
 import { MessagesListThread } from './MessagesListThread';
-import { Message } from './ui/ChatAPI';
+import { Message } from './ChatAPI';
 
 interface MessagesListProps {
   messages: Message[];

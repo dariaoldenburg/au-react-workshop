@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from './ui/ChatAPI';
+import { User } from './ChatAPI';
 import './UsersList.css';
 
 interface UsersListProps {

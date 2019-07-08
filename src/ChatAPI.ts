@@ -12,14 +12,7 @@ export interface Message {
   createdAt: string;
   content: string;
   user?: User;
-  submessages: Submessage[];
-}
-
-export interface Submessage {
-  id: number;
-  createdAt: string;
-  content: string;
-  user?: User;
+  submessages?: Message[];
 }
 
 let uuid = 100;
@@ -51,7 +44,7 @@ function _addMessage(message: { content: string; parentMessageId?: number }) {
     nextMessages[index] = {
       ...parentMessage,
       submessages: [
-        ...parentMessage.submessages,
+        ...(parentMessage.submessages || []),
         {
           id: ++uuid,
           content: message.content,
@@ -96,7 +89,7 @@ function _init() {
         id: ++uuid,
         createdAt: new Date().toString(),
         content: '@here ślimak',
-        user: users[2],
+        user: users[1],
         submessages: []
       },
       {
@@ -109,7 +102,7 @@ function _init() {
             id: ++uuid,
             createdAt: new Date().toString(),
             content: ':+1:',
-            user: users[1]
+            user: users[2]
           },
           {
             id: ++uuid,
