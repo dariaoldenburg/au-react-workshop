@@ -28,7 +28,7 @@ interface ChatState {
 
 export class Chat extends React.PureComponent<{}, ChatState> {
   state = {
-    channelName: 'Sieradz - Nasze Radio',
+    channelName: 'AppUnite: #obiady',
     currentUser: null,
     onlineUsers: [],
     onlineUsersLoading: true,

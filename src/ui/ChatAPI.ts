@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 export interface User {
   id: number;
@@ -6,48 +6,126 @@ export interface User {
   color?: string;
   senior?: boolean;
 }
+
 export interface Message {
   id: number;
   createdAt: string;
   content: string;
-  name: string;
-  color?: string;
+  user?: User;
+  submessages: Submessage[];
 }
 
-let uuid = 1;
+export interface Submessage {
+  id: number;
+  createdAt: string;
+  content: string;
+  user?: User;
+}
+
+let uuid = 100;
 let currentUser: User | undefined = undefined;
 
-const users$ = new BehaviorSubject<User[]>([]);
-const messages$ = new BehaviorSubject<Message[]>([]);
+let users: User[] = [];
+const users$ = new ReplaySubject<User[]>(1);
+let messages: Message[] = [];
+const messages$ = new ReplaySubject<Message[]>(1);
 
-function _addMessage(message: { content: string }) {
-  messages$.next([
-    ...messages$.value,
-    {
+function _setUsers(_users: User[]) {
+  users = _users;
+  users$.next(_users);
+}
+
+function _setMessages(_messages: Message[]) {
+  messages = _messages;
+  messages$.next(_messages);
+}
+
+function _addMessage(message: { content: string; parentMessageId?: number }) {
+  const nextMessages = [...messages];
+  const parentMessage = message.parentMessageId
+    ? nextMessages.find(m => m.id === message.parentMessageId)
+    : undefined;
+
+  if (parentMessage) {
+    const index = nextMessages.indexOf(parentMessage);
+    nextMessages[index] = {
+      ...parentMessage,
+      submessages: [
+        ...parentMessage.submessages,
+        {
+          id: ++uuid,
+          content: message.content,
+          createdAt: new Date().toString(),
+          user: currentUser
+        }
+      ]
+    };
+  } else {
+    nextMessages.push({
       id: ++uuid,
       content: message.content,
       createdAt: new Date().toString(),
-      name: currentUser!.name,
-      color: currentUser!.color
-    }
-  ]);
+      user: currentUser,
+      submessages: []
+    });
+  }
+
+  _setMessages(nextMessages);
 }
 
 function _addUser(user: User) {
-  users$.next([...users$.value, user]);
+  _setUsers([...users, user]);
 }
 
 function _removeUser(user: User) {
-  users$.next(users$.value.filter(u => u.id !== user.id));
+  _setUsers(users.filter(u => u.id !== user.id));
 }
 
 function _init() {
   setTimeout(() => {
-    _addUser({ id: ++uuid, name: 'geron' });
-    _addUser({ id: ++uuid, name: 'hit_fm', color: 'pink', senior: true });
-    _addUser({ id: ++uuid, name: 'kasienka2' });
-    _addUser({ id: ++uuid, name: 'Lady_Ann_' });
-    _addUser({ id: ++uuid, name: 'MalWINKaaa', color: 'orange', senior: true });
+    _setUsers([
+      { id: ++uuid, name: 'geron' },
+      { id: ++uuid, name: 'hit_fm', color: 'pink', senior: true },
+      { id: ++uuid, name: 'kasienka2' },
+      { id: ++uuid, name: 'Lady_Ann_' },
+      { id: ++uuid, name: 'MalWINKaaa', color: 'orange', senior: true }
+    ]);
+
+    _setMessages([
+      {
+        id: ++uuid,
+        createdAt: new Date().toString(),
+        content: '@here ślimak',
+        user: users[2],
+        submessages: []
+      },
+      {
+        id: ++uuid,
+        createdAt: new Date().toString(),
+        content: 'mingwok ktoś?',
+        user: users[4],
+        submessages: [
+          {
+            id: ++uuid,
+            createdAt: new Date().toString(),
+            content: ':+1:',
+            user: users[1]
+          },
+          {
+            id: ++uuid,
+            createdAt: new Date().toString(),
+            content: '1x makaron smażony z kurczakiem',
+            user: users[3]
+          },
+          {
+            id: ++uuid,
+            createdAt: new Date().toString(),
+            content: '@kasienka2 a jaki makaron?',
+            user: users[4]
+          }
+        ]
+      }
+    ]);
   }, 1000);
 }
 
@@ -61,7 +139,10 @@ export function fetchOnlineUsers() {
   return users$.asObservable();
 }
 
-export function createMessage(message: { content: string }) {
+export function createMessage(message: {
+  content: string;
+  parentMessageId?: number;
+}) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       _addMessage(message);

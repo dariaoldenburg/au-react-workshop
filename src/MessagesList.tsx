@@ -13,8 +13,17 @@ export function MessagesList(props: MessagesListProps) {
 
         return (
           <div key={message.id || message.content}>
-            <strong>[{date.toLocaleTimeString()}]</strong>
-            <span style={{ color: message.color }}> {message.name}: </span>
+            <strong>[{date.toLocaleTimeString()}]</strong>{' '}
+            {message.user && (
+              <span
+                style={{
+                  color: message.user.color,
+                  fontWeight: message.user.senior ? 'bold' : undefined
+                }}
+              >
+                {message.user.name}:{' '}
+              </span>
+            )}
             {message.content}
           </div>
         );
