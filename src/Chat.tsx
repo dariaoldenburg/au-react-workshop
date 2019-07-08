@@ -40,19 +40,23 @@ export class Chat extends React.PureComponent<{}, ChatState> {
   private _subscriptions: Subscription[] = [];
 
   componentDidMount() {
-    fetchOnlineUsers().subscribe(users => {
-      this.setState({
-        onlineUsers: users,
-        onlineUsersLoading: false
-      });
-    });
+    this._subscriptions.push(
+      fetchOnlineUsers().subscribe(users => {
+        this.setState({
+          onlineUsers: users,
+          onlineUsersLoading: false
+        });
+      })
+    );
 
-    fetchMessages().subscribe(messages => {
-      this.setState({
-        messages,
-        messagesLoading: false
-      });
-    });
+    this._subscriptions.push(
+      fetchMessages().subscribe(messages => {
+        this.setState({
+          messages,
+          messagesLoading: false
+        });
+      })
+    );
   }
 
   componentWillUnmount() {
