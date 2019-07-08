@@ -24,6 +24,7 @@ interface ChatState {
   messages: Message[];
   messagesLoading: boolean;
   currentMessage: string;
+  replyTo?: Message;
 }
 
 export class Chat extends React.PureComponent<{}, ChatState> {
@@ -34,7 +35,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     onlineUsersLoading: true,
     messages: [],
     messagesLoading: true,
-    currentMessage: ''
+    currentMessage: '',
+    replyTo: undefined
   };
 
   private _subscriptions: Subscription[] = [];
@@ -69,7 +71,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
 
     createMessage({ content: currentMessage });
     this.setState({
-      currentMessage: ''
+      currentMessage: '',
+      replyTo: undefined
     });
   };
 
@@ -96,6 +99,18 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     this.setState({ currentUser: null });
   };
 
+  handleReplyClick = (message: Message) => {
+    this.setState({
+      replyTo: message
+    });
+  };
+
+  handleReplyClear = () => {
+    this.setState({
+      replyTo: undefined
+    });
+  };
+
   render() {
     const {
       channelName,
@@ -104,7 +119,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
       messages,
       messagesLoading,
       currentMessage,
-      currentUser
+      currentUser,
+      replyTo
     } = this.state;
 
     return (
@@ -123,7 +139,10 @@ export class Chat extends React.PureComponent<{}, ChatState> {
             {messagesLoading ? (
               <div>Ładowanie...</div>
             ) : (
-              <MessagesList messages={messages} />
+              <MessagesList
+                messages={messages}
+                onReplyClick={this.handleReplyClick}
+              />
             )}
           </Cell>
           <Cell widthPercentage={30} scrollable height={300}>
@@ -134,10 +153,12 @@ export class Chat extends React.PureComponent<{}, ChatState> {
         <Row>
           <Cell header widthPercentage={70}>
             <MessageBox
-              onChange={this.handleTextAreaOnChange}
-              onSubmit={this.handleSendMessage}
               message={currentMessage}
               disabled={!currentUser}
+              replyTo={replyTo}
+              onReplyClear={this.handleReplyClear}
+              onChange={this.handleTextAreaOnChange}
+              onSubmit={this.handleSendMessage}
             />
           </Cell>
           <Cell widthPercentage={30}>

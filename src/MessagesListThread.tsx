@@ -19,8 +19,8 @@ const SubmessagesList = ({
       <div>
         <button onClick={onClick}>
           {!extended
-            ? `[show ${messages.length} other messages]`
-            : '[hide thread]'}
+            ? `[pokaż odpowiedzi (${messages.length})]`
+            : '[schowaj odpowiedzi]'}
         </button>
       </div>
     </div>
@@ -29,6 +29,8 @@ const SubmessagesList = ({
 
 interface MessagesListThreadProps {
   message: Message;
+  showSubmessages: boolean;
+  onReplyClick?(): void;
 }
 
 interface MessagesListThreadState {
@@ -39,6 +41,10 @@ export class MessagesListThread extends React.PureComponent<
   MessagesListThreadProps,
   MessagesListThreadState
 > {
+  static defaultProps = {
+    showSubmessages: true
+  };
+
   state = {
     extended: false
   };
@@ -50,13 +56,20 @@ export class MessagesListThread extends React.PureComponent<
   };
 
   render() {
-    const { message } = this.props;
+    const { message, onReplyClick, showSubmessages } = this.props;
     const { extended } = this.state;
     const date = new Date(message.createdAt);
 
     return (
       <div key={message.id || message.content}>
-        <strong>[{date.toLocaleTimeString()}]</strong>{' '}
+        <strong
+          onClick={onReplyClick}
+          style={{
+            cursor: 'pointer'
+          }}
+        >
+          [{date.toLocaleTimeString()}]
+        </strong>{' '}
         {message.user && (
           <span
             style={{
@@ -68,13 +81,15 @@ export class MessagesListThread extends React.PureComponent<
           </span>
         )}
         {message.content}
-        {message.submessages && message.submessages.length > 0 && (
-          <SubmessagesList
-            messages={message.submessages}
-            extended={extended}
-            onClick={this.handleShowMore}
-          />
-        )}
+        {showSubmessages &&
+          message.submessages &&
+          message.submessages.length > 0 && (
+            <SubmessagesList
+              messages={message.submessages}
+              extended={extended}
+              onClick={this.handleShowMore}
+            />
+          )}
       </div>
     );
   }
