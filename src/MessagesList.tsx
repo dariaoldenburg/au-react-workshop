@@ -1,5 +1,6 @@
 import React from 'react';
 import { Message } from './ChatAPI';
+import { MessagesListThread } from './MessagesListThread';
 
 interface MessagesListProps {
   messages: Message[];
@@ -8,22 +9,9 @@ interface MessagesListProps {
 export function MessagesList(props: MessagesListProps) {
   return (
     <React.Fragment>
-      {props.messages.map(message => {
-        const date = new Date(message.createdAt);
-
-        return (
-          <div key={message.id || message.content}>
-            <strong>[{date.toLocaleTimeString()}]</strong>
-            {message.user && (
-              <span style={{ color: message.user.color }}>
-                {' '}
-                {message.user.name}:{' '}
-              </span>
-            )}
-            {message.content}
-          </div>
-        );
-      })}
+      {props.messages.map(message => (
+        <MessagesListThread key={message.id} message={message} />
+      ))}
     </React.Fragment>
   );
 }
