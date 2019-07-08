@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/au-react-workshop/static/css/main.ffe58ce4.chunk.css",
-    "main.js": "/au-react-workshop/static/js/main.8389aefd.chunk.js",
-    "main.js.map": "/au-react-workshop/static/js/main.8389aefd.chunk.js.map",
+    "main.js": "/au-react-workshop/static/js/main.59c6eb34.chunk.js",
+    "main.js.map": "/au-react-workshop/static/js/main.59c6eb34.chunk.js.map",
     "runtime~main.js": "/au-react-workshop/static/js/runtime~main.f365f806.js",
     "runtime~main.js.map": "/au-react-workshop/static/js/runtime~main.f365f806.js.map",
-    "static/js/2.747664a9.chunk.js": "/au-react-workshop/static/js/2.747664a9.chunk.js",
-    "static/js/2.747664a9.chunk.js.map": "/au-react-workshop/static/js/2.747664a9.chunk.js.map",
+    "static/js/2.4f1131b8.chunk.js": "/au-react-workshop/static/js/2.4f1131b8.chunk.js",
+    "static/js/2.4f1131b8.chunk.js.map": "/au-react-workshop/static/js/2.4f1131b8.chunk.js.map",
     "index.html": "/au-react-workshop/index.html",
-    "precache-manifest.1e880b307655fd92c4ce1e2a0c3169d3.js": "/au-react-workshop/precache-manifest.1e880b307655fd92c4ce1e2a0c3169d3.js",
+    "precache-manifest.3968132b6bad89d39a412d3d99b17807.js": "/au-react-workshop/precache-manifest.3968132b6bad89d39a412d3d99b17807.js",
     "service-worker.js": "/au-react-workshop/service-worker.js",
     "static/css/main.ffe58ce4.chunk.css.map": "/au-react-workshop/static/css/main.ffe58ce4.chunk.css.map"
   }
