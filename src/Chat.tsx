@@ -83,8 +83,8 @@ export class Chat extends React.PureComponent<{}, ChatState> {
   };
 
   handleSignIn = () => {
-    const name = prompt('Twoje nick: ');
-    const color = prompt('Kolor: ', '') || undefined;
+    const name = prompt('Twój nick: ', 'gość123');
+    const color = prompt('Kolor: ', 'red') || undefined;
 
     if (name) {
       return login({ name, color }).then(currentUser => {
