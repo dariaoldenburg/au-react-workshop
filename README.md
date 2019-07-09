@@ -347,11 +347,21 @@ class Clock extends React.Component<{}, ClockState> {
 
 - [ ]
 
-### 3. TBD
+### Lesson 3
 
-### 4. TBD
+TODO
 
-### 5. TBD
+### Exercise 3
+
+TODO
+
+### Lesson 4
+
+TODO
+
+### Exercise 4
+
+TODO
 
 ## Additional information
 
