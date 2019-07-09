@@ -345,7 +345,48 @@ class Clock extends React.Component<{}, ClockState> {
 
 ### Exercise 2
 
-TODO
+Now we can add messages list.
+
+- [ ] Create `MessagesList` component with following props:
+
+```ts
+interface MessagesListProps {
+  messages: Message[];
+}
+```
+
+- [ ] Use map function for mapping all messages. Try to make the html structure for the message similar to the one in the demo app. You can use div, strong and span tags.
+
+- [ ] To render the date you can use:
+
+```ts
+const date = new Date(message.createdAt);
+date.toLocaleTimeString()
+```
+
+- [ ] For this component you don't need any css classes, you can just add inline styles (color and font-weight) for username.
+
+- [ ] In `Chat` render `MessagesList`
+
+### Exercise 2b
+
+It's time to add login and logout functionalities.
+
+- In `Chat`:
+
+  - [ ] add `currentUser: User | null` to `this.state`
+
+  - [ ] if currentUser exists then render a button that triggers `this.handleSignOut` when clicked
+
+   - [ ] if currentUser doesn't exists then render a button that triggers `this.handleSignIn` when clicked
+
+   - [ ] create `this.handleSignIn` method. Use `prompt()` to display a dialog boxes. You should ask an user for name and color. If the user gives the name, use `login()` from `ChatAPI`, otherwise show alert. When Promise is resolved set current user.
+
+   - [ ] create `this.handleSignOut` method. Use `logout()` from `ChatAPI` and set current user to null.
+
+### Exercise 2c (optional)
+
+- [ ] Render users list.
 
 ### Lesson 3
 
@@ -623,11 +664,83 @@ Add a possibility to write and submit new messages:
 
 ### Lesson 4
 
-TODO
+#### Tests with ReactTestUtils
+
+[Docs: Test Utilities](https://reactjs.org/docs/test-utils.html)
+
+```tsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Button } from './Button';
+import { Simulate } from 'react-dom/test-utils';
+
+it('renders the button element', () => {
+  const div = document.createElement('div');
+  ReactDOM.render(<Button>text</Button>, div);
+
+  const button = div.querySelector('button')!;
+  expect(button).toBeTruthy();
+
+  expect(button.textContent).toEqual('text');
+
+  ReactDOM.unmountComponentAtNode(div);
+});
+
+it('calls onClick on click', () => {
+  const onClick = jest.fn();
+  const div = document.createElement('div');
+  ReactDOM.render(<Button onClick={onClick} />, div);
+
+  const button = div.querySelector('button')!;
+
+  Simulate.click(button);
+  expect(onClick).toHaveBeenCalledTimes(1);
+
+  ReactDOM.unmountComponentAtNode(div);
+});
+```
+
+```tsx
+//better
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Button } from './Button';
+import { Simulate } from 'react-dom/test-utils';
+
+let div: HTMLDivElement;
+beforeEach(() => {
+  div = document.createElement('div');
+});
+afterEach(() => {
+  ReactDOM.unmountComponentAtNode(div);
+});
+
+it('renders the button element', () => {
+  ReactDOM.render(<Button>text</Button>, div);
+
+  const button = div.querySelector('button')!;
+  expect(button).toBeTruthy();
+  expect(button.textContent).toEqual('text');
+});
+
+it('calls onClick on click', () => {
+  const onClick = jest.fn();
+  ReactDOM.render(<Button onClick={onClick} />, div);
+
+  const button = div.querySelector('button')!;
+  Simulate.click(button);
+  expect(onClick).toHaveBeenCalledTimes(1);
+});
+```
 
 ### Exercise 4
 
-TODO
+- [ ] Create test for `Cell`. You only need to check if it renders correctly.
+- [ ] Create similar test for `Row`.
+
+### Exercise 4b (optional)
+
+- [ ] Create test for another component from outside ui directory.
 
 ## Additional information
 
