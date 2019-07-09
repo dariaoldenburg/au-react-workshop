@@ -200,6 +200,8 @@ Button.defaultProps = {
 
     Note: You don't have to create any components for the inside stuff of the chat! Instead, you can just print in cells something like `"Here be chat title"` ;)
 
+- [ ] (optionally) Create your own `Button` component
+
 ### Lesson 2
 
 #### Class Component
