@@ -34,6 +34,8 @@ Let's do a [PolChat](http://applet.polfan.pl/)!
 
 ## Learning resources
 
+- https://reactjs.org/docs/getting-started.html#learn-react
+
 ## Additional information
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
