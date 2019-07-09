@@ -28,7 +28,7 @@ interface ChatState {
 }
 
 export class Chat extends React.PureComponent<{}, ChatState> {
-  state = {
+  state: ChatState = {
     channelName: 'AppUnite: #obiady',
     currentUser: null,
     onlineUsers: [],
@@ -67,9 +67,12 @@ export class Chat extends React.PureComponent<{}, ChatState> {
   }
 
   handleSendMessage = () => {
-    const { currentMessage } = this.state;
+    const { currentMessage, replyTo } = this.state;
 
-    createMessage({ content: currentMessage });
+    createMessage({
+      content: currentMessage,
+      parentMessageId: replyTo ? replyTo.id : undefined
+    });
     this.setState({
       currentMessage: '',
       replyTo: undefined
