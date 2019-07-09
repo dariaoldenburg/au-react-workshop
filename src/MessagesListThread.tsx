@@ -1,5 +1,6 @@
 import React from 'react';
 import { Message } from './ChatAPI';
+import { Button } from './ui/Button';
 
 const SubmessagesList = ({
   messages,
@@ -17,11 +18,11 @@ const SubmessagesList = ({
           <MessagesListThread key={message.id} message={message} />
         ))}
       <div>
-        <button onClick={onClick}>
+        <Button onClick={onClick}>
           {!extended
             ? `[pokaż odpowiedzi (${messages.length})]`
             : '[schowaj odpowiedzi]'}
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button } from './ui/Button';
-import './MessageBox.css';
 import { Message } from './ChatAPI';
+import './MessageBox.css';
 import { MessagesListThread } from './MessagesListThread';
+import { Button } from './ui/Button';
 
 export interface MessageBox {
   message: string;
@@ -50,9 +50,9 @@ export function MessageBox(props: MessageBox) {
       {replyTo && (
         <div>
           Odpowiadasz na{' '}
-          <button type="button" onClick={onReplyClear}>
+          <Button type="button" onClick={onReplyClear}>
             (anuluj)
-          </button>
+          </Button>
           <div
             style={{
               background: '#fff',
