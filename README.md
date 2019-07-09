@@ -347,11 +347,277 @@ TODO
 
 ### Lesson 3
 
-TODO
+#### Controlled Components
+
+[Docs](https://reactjs.org/docs/forms.html#controlled-components)
+
+```tsx
+class NameForm extends React.Component<
+  { initialValue: string },
+  { value: string }
+> {
+  constructor(props) {
+    super(props);
+    this.state = { value: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    alert('A name was submitted: ' + this.state.value);
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+```
+
+#### `textarea` tag
+
+Use `value` instead of `children`.
+
+```tsx
+<textarea value={this.state.value} onChange={this.handleChange} />
+```
+
+#### Data must always flow down
+
+[Docs](https://reactjs.org/docs/state-and-lifecycle.html#the-data-flows-down)
+
+```tsx
+// Bad
+class Chat extends React.Component<
+  {},
+  {
+    newMessageContent: string;
+  }
+> {
+  state = {
+    newMessageContent: ''
+  };
+
+  render() {
+    return (
+      <NewMessageForm
+        content={this.state.newMessageContent}
+        updateState={this.setState}
+      />
+    );
+  }
+}
+
+// Good
+class Chat extends React.Component<
+  {},
+  {
+    newMessageContent: string;
+  }
+> {
+  state = {
+    newMessageContent: ''
+  };
+
+  handleContentChange = (nextContent: string) => {
+    this.setState({ newMessageContent: nextContent });
+  };
+
+  render() {
+    return (
+      <NewMessageForm
+        content={this.state.newMessageContent}
+        onContentChange={this.handleContentChange}
+      />
+    );
+  }
+}
+```
+
+#### Never mutate props
+
+```tsx
+// Bad
+interface Props {
+  message: Message;
+  onChange?(message: Message): void;
+}
+interface State {
+  inEdit: boolean;
+}
+class MessagePage extends React.Component<Props, State> {
+  state: State = {
+    inEdit: false
+  };
+
+  render() {
+    const { message, onChange } = this.props;
+    const { inEdit } = this.state;
+
+    return (
+      <>
+        <MessagePreview message={message} />
+        {inEdit && (
+          <textarea
+            value={message.content}
+            onChange={event => {
+              message.content = event.target.value;
+              if (onChange) {
+                onChange(message);
+              }
+            }}
+          />
+        )}
+      </>
+    );
+  }
+}
+
+// Good
+interface Props {
+  message: Message;
+  onChange?(message: Message): void;
+}
+interface State {
+  inEdit: boolean;
+}
+class MessagePage extends React.Component<Props, State> {
+  state: State = {
+    inEdit: false
+  };
+
+  render() {
+    const { message, onChange } = this.props;
+    const { inEdit } = this.state;
+
+    return (
+      <>
+        <MessagePreview message={message} />
+        {inEdit && (
+          <textarea
+            value={message.content}
+            onChange={event => {
+              if (onChange) {
+                onChange({ ...message, content: event.target.value });
+              }
+            }}
+          />
+        )}
+      </>
+    );
+  }
+}
+
+// Good as well
+interface Props {
+  message: Message;
+  onChange?(message: Message): void;
+}
+interface State {
+  inEdit: boolean;
+  editedMessage: Message;
+}
+class MessagePage extends React.Component<Props, State> {
+  state: State = {
+    inEdit: false,
+    editedMessage: this.props.message
+  };
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps !== this.props.message) {
+      this.setState({
+        editedMessage: this.props.message
+      });
+    }
+  }
+
+  render() {
+    const { onChange } = this.props;
+    const { editedMessage, inEdit } = this.state;
+
+    return (
+      <form
+        onSubmit={event => {
+          event.preventDefault();
+          onChange(editedMessage);
+        }}
+      >
+        <MessagePreview message={editedMessage} />
+        {inEdit && (
+          <textarea
+            value={editedMessage.content}
+            onChange={event => {
+              this.setState({
+                editedMessage: { ...editedMessage, content: event.target.value }
+              });
+            }}
+          />
+        )}
+      </form>
+    );
+  }
+}
+```
 
 ### Exercise 3
 
-TODO
+Add a possibility to write and submit new messages:
+
+- [ ] Create `MessageBox` component, that:
+
+  - [ ] has following props:
+
+    ```tsx
+    interface MessageBoxProps {
+      messageContent?: string;
+      disabled?: boolean;
+      onChange?: (value: string) => void;
+      onSubmit?: () => void;
+    }
+    ```
+
+  - [ ] renders `<textarea>`, that:
+
+    - has value equal to `props.messageContent`
+    - triggers `props.onChange` whenever its' value is changed
+
+  - [ ] wraps `<textarea>` with `<form>`, that:
+
+    - triggers `props.onSubmit` when form is submitted
+
+  - [ ] renders a button, that triggers `props.onSubmit` when clicked
+
+  - [ ] when `<textarea>` receives `ENTER` (but not `SHIFT+ENTER`), it triggers `props.onSubmit`
+
+- In `Chat`:
+
+  - [ ] add `newMessageContent: string` to `this.state`
+
+  - [ ] render `MessageBox` and control `this.state.newMessageContent` with it
+
+  - [ ] once `MessageBox#props.onSubmit` is called, call `ChatApi.createMessage()`
+
+### Exercise 3b (optional)
+
+- [ ] Render nested thread messages (`Message.submessages`)
+
+- [ ] Add possibility to add a message to an existing thread (`parentMessageId` in `ChatApi.createMessage(...)`)
 
 ### Lesson 4
 
