@@ -305,8 +305,6 @@ class Accordion extends React.Component<AccordionProps, AccordionState> {
 }
 ```
 
-##### P.S. Never mutate state directly! (Don't do `this.state.extended = ...`.) [Read here about more dos and donts.](https://reactjs.org/docs/state-and-lifecycle.html#using-state-correctly)
-
 #### Component Lifecycle
 
 [Docs: Adding Lifecycle Methods to a Class](https://reactjs.org/docs/state-and-lifecycle.html#adding-lifecycle-methods-to-a-class)
@@ -345,7 +343,7 @@ class Clock extends React.Component<{}, ClockState> {
 
 ### Exercise 2
 
-- [ ]
+TODO
 
 ### Lesson 3
 
