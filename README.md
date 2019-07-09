@@ -1,5 +1,11 @@
 # AppUnite React Workshops no 1
 
+Let's do a [PolChat](http://applet.polfan.pl/)!
+
+![PolChat screenshot](http://iceq.ikari.pl/images/old_applet.jpg)
+
+Demo app: https://dariaoldenburg.github.io/au-react-workshop/
+
 ## Development
 
 ```bash
@@ -17,10 +23,6 @@ npm test
 ```
 
 ## Lessons
-
-Let's do a [PolChat](http://applet.polfan.pl/)!
-
-![PolChat screenshot](http://iceq.ikari.pl/images/old_applet.jpg)
 
 ### Learning resources
 
