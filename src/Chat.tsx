@@ -20,8 +20,12 @@ export function Chat() {
       </Row>
 
       <Row>
-        <Cell widthPercentage={70}>here be chat</Cell>
-        <Cell widthPercentage={30}>here be online users list</Cell>
+        <Cell height={300} scrollable widthPercentage={70}>
+          here be chat
+        </Cell>
+        <Cell height={300} scrollable widthPercentage={30}>
+          here be online users list
+        </Cell>
       </Row>
 
       <Row>

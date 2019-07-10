@@ -3,6 +3,9 @@
 .Cell--padded {
   padding: 5px;
 }
+.Cell--scrollable {
+  overflow-y: auto;
+}
 .Cell--header {
   background-color: #7fafdf;
 }
