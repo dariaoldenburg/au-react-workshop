@@ -343,6 +343,52 @@ class Clock extends React.Component<{}, ClockState> {
 }
 ```
 
+#### Element lists and `key`s
+
+[Docs](https://reactjs.org/docs/lists-and-keys.html)
+
+When rendering a list of elements, remember to add a unique `key` prop to all of them.
+
+```tsx
+// Bad: Invalid JSX
+return (
+  <Component data={userA} />
+  <Component data={userB} />
+  <Component data={userC} />
+);
+
+// Bad: `key` is missing
+return [
+  <Component data={userA} />,
+  <Component data={userB} />,
+  <Component data={userC} />,
+];
+
+// Good
+return [
+  <Component key={userA.id} data={userA} />,
+  <Component key={userB.id} data={userB} />,
+  <Component key={userC.id} data={userC} />,
+];
+
+// Better
+return [userA, userB, userC].map(user => (
+  <Component key={user.id} data={user} />
+));
+```
+
+P.S. When rendering a non-dynamic list, you can just use `<React.Fragment>` or `<>` instead (then `key` is not needed):
+
+```tsx
+return (
+  <>
+    <Component data={userA} />
+    <Component data={userB} />
+    <Component data={userC} />
+  </>
+);
+```
+
 ### Exercise 2
 
 Now we can add messages list.
@@ -361,7 +407,7 @@ interface MessagesListProps {
 
 ```ts
 const date = new Date(message.createdAt);
-date.toLocaleTimeString()
+date.toLocaleTimeString();
 ```
 
 - [ ] For this component you don't need any css classes, you can just add inline styles (color and font-weight) for username.
@@ -378,11 +424,11 @@ It's time to add login and logout functionalities.
 
   - [ ] if currentUser exists then render a button that triggers `this.handleSignOut` when clicked
 
-   - [ ] if currentUser doesn't exists then render a button that triggers `this.handleSignIn` when clicked
+  - [ ] if currentUser doesn't exists then render a button that triggers `this.handleSignIn` when clicked
 
-   - [ ] create `this.handleSignIn` method. Use `prompt()` to display a dialog boxes. You should ask an user for name and color. If the user gives the name, use `login()` from `ChatAPI`, otherwise show alert. When Promise is resolved set current user.
+  - [ ] create `this.handleSignIn` method. Use `prompt()` to display a dialog boxes. You should ask an user for name and color. If the user gives the name, use `login()` from `ChatAPI`, otherwise show alert. When Promise is resolved set current user.
 
-   - [ ] create `this.handleSignOut` method. Use `logout()` from `ChatAPI` and set current user to null.
+  - [ ] create `this.handleSignOut` method. Use `logout()` from `ChatAPI` and set current user to null.
 
 ### Exercise 2c (optional)
 
