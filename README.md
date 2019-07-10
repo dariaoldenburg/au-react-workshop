@@ -799,3 +799,13 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/co
 ### Advanced Configuration
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+## Branch Cheatsheet
+
+```bash
+git checkout lesson1 # Lesson 1
+git checkout lesson2 # Lesson 2
+git checkout lesson3 # Lesson 3
+git checkout lesson4 # Lesson 4
+git checkout master # After all lessons
+```
