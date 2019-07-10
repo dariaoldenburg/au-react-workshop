@@ -4,11 +4,11 @@ import './Button.css';
 
 interface ButtonProps {
   variant: 'primary' | 'secondary';
-  type?: 'submit' | 'button' | 'reset';
+  type: 'submit' | 'button' | 'reset';
   disabled?: boolean;
+  fullWidth?: boolean;
   onClick?: () => void;
   children?: React.ReactNode;
-  fullWidth?: boolean;
 }
 
 export function Button(props: ButtonProps) {
@@ -30,5 +30,6 @@ export function Button(props: ButtonProps) {
 }
 
 Button.defaultProps = {
-  variant: 'primary'
+  variant: 'primary',
+  type: 'button'
 };

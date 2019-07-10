@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row } from './ui/Row';
 import { Cell } from './ui/Cell';
+import { Button } from './ui/Button';
 
 export function Chat() {
   const channelName = 'Sieradz - Nasze Radio';
@@ -26,6 +27,11 @@ export function Chat() {
       <Row>
         <Cell header widthPercentage={70}>
           here be textarea
+        </Cell>
+        <Cell widthPercentage={30}>
+          <Button fullWidth onClick={() => alert('TODO login')}>
+            Zaloguj się
+          </Button>
         </Cell>
       </Row>
     </div>
