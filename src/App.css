@@ -1,9 +1,4 @@
 .App {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-  font-weight: 400;
-  color: #bf040c;
-  min-height: 100vh;
+  margin: 0 auto;
+  max-width: 600px;
 }
