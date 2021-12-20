@@ -5,21 +5,10 @@ import { MessagesListThread } from './MessagesListThread';
 import { Button } from './ui/Button';
 
 export interface MessageBox {
-  message: string;
   disabled?: boolean;
   replyTo?: Message;
   onReplyClear?(): void;
-  onChange: (value: string) => void;
-  onSubmit: () => void;
-}
-
-function handleChange(
-  event: React.ChangeEvent<HTMLTextAreaElement>,
-  onChange: MessageBox['onChange']
-) {
-  if (onChange) {
-    onChange(event.target.value);
-  }
+  onSubmit: (content: string) => void;
 }
 
 function handleSubmit(
@@ -28,19 +17,12 @@ function handleSubmit(
 ) {
   event.preventDefault();
   if (onSubmit) {
-    onSubmit();
+    onSubmit('something');
   }
 }
 
 export function MessageBox(props: MessageBox) {
-  const {
-    onChange,
-    onSubmit,
-    message,
-    disabled,
-    replyTo,
-    onReplyClear
-  } = props;
+  const { onSubmit, disabled, replyTo, onReplyClear } = props;
 
   return (
     <form
@@ -65,12 +47,7 @@ export function MessageBox(props: MessageBox) {
         </div>
       )}
 
-      <textarea
-        value={message}
-        onChange={event => handleChange(event, onChange)}
-        className="MessageBox__textarea"
-        disabled={disabled}
-      />
+      <textarea value="" className="MessageBox__textarea" disabled={disabled} />
 
       <Button type="submit" disabled={disabled}>
         Wyślij

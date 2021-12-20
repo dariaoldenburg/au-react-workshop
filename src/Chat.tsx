@@ -23,7 +23,6 @@ interface ChatState {
   onlineUsersLoading: boolean;
   messages: Message[];
   messagesLoading: boolean;
-  currentMessage: string;
   replyTo?: Message;
 }
 
@@ -35,7 +34,6 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     onlineUsersLoading: true,
     messages: [],
     messagesLoading: true,
-    currentMessage: '',
     replyTo: undefined
   };
 
@@ -66,22 +64,15 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     this._subscriptions.length = 0;
   }
 
-  handleSendMessage = () => {
-    const { currentMessage, replyTo } = this.state;
+  handleSendMessage = (content: string) => {
+    const { replyTo } = this.state;
 
     createMessage({
-      content: currentMessage,
+      content,
       parentMessageId: replyTo ? replyTo.id : undefined
     });
     this.setState({
-      currentMessage: '',
       replyTo: undefined
-    });
-  };
-
-  handleTextAreaOnChange = (value: string) => {
-    this.setState({
-      currentMessage: value
     });
   };
 
@@ -122,7 +113,6 @@ export class Chat extends React.PureComponent<{}, ChatState> {
       messages,
       messagesLoading,
       currentUser,
-      currentMessage,
       replyTo
     } = this.state;
 
@@ -156,11 +146,9 @@ export class Chat extends React.PureComponent<{}, ChatState> {
         <Row>
           <Cell header widthPercentage={70}>
             <MessageBox
-              message={currentMessage}
               disabled={!currentUser}
               replyTo={replyTo}
               onReplyClear={this.handleReplyClear}
-              onChange={this.handleTextAreaOnChange}
               onSubmit={this.handleSendMessage}
             />
           </Cell>
