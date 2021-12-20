@@ -85,7 +85,7 @@ export class Chat extends React.PureComponent<{}, ChatState> {
     });
   };
 
-  handleSignIn = () => {
+  handleSignIn() {
     const name = prompt('Twój nick: ', 'gość777');
     const color = prompt('Kolor: ', 'red') || undefined;
 
@@ -95,12 +95,12 @@ export class Chat extends React.PureComponent<{}, ChatState> {
       });
     }
     alert('Podaj nick!');
-  };
+  }
 
-  handleSignOut = () => {
+  handleSignOut() {
     logout();
     this.setState({ currentUser: null });
-  };
+  }
 
   handleReplyClick = (message: Message) => {
     this.setState({
